@@ -1,0 +1,14 @@
+{
+  "extends": [
+    "airbnb-base",
+    "prettier",
+    "plugin:jest/recommended",
+    "plugin:jest/style"
+  ],
+  "rules": {
+    "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }]
+  },
+  "plugins": [
+    "jest"
+  ]
+}
