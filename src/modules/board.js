@@ -1,5 +1,4 @@
 /* eslint-disable no-return-assign */
-import Ship from "./ships";
 
 const makeBoard = () => {
   const boardObject = {
