@@ -1,7 +1,7 @@
 import Board from "./board";
 import Ship from "./ships";
 
-describe("Board tests", () => {
+describe("Place ships tests", () => {
   const board = new Board();
   it("should throw an error if no position is given", () => {
     const ship = new Ship(2);
@@ -48,6 +48,4 @@ describe("receiveAttack method tests", () => {
   it("should records the missed attack", () => {
     expect(board.missedAttacks[0]).toEqual(["A", 5]);
   });
-
-  //   it("should");
 });
