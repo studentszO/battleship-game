@@ -23,6 +23,7 @@ const makeBoard = () => {
 export default class Board {
   constructor() {
     this.board = makeBoard();
+    this.missedAttacks = [];
   }
 
   placeShip(ship, [coordinatesX, coordinatesY], position) {
@@ -45,5 +46,15 @@ export default class Board {
       for (let i = 0; i < ship.length; i++)
         this.board[coordinatesX][coordinatesY - 1 + i] = ship;
     }
+  }
+
+  receiveAttack(coordinatesX, coordinatesY) {
+    const target = this.board[coordinatesX][coordinatesY - 1];
+    if (typeof target !== "number") {
+      target.hit();
+      return "Target HIT!";
+    }
+    this.missedAttacks.push([coordinatesX, coordinatesY]);
+    return "No ship on those coordinates! :(";
   }
 }
