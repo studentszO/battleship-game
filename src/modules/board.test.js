@@ -29,13 +29,14 @@ describe("Place ships tests", () => {
   it("should place a ship on the board vertically", () => {
     const ship = new Ship(5);
     board.placeShip(ship, ["C", 7], "v");
-    expect(board.board.G[7]).toMatchObject(ship);
+    expect(board.board.G[6]).toMatchObject(ship);
   });
 });
 
 describe("receiveAttack method tests", () => {
   const board = new Board();
   board.placeShip(new Ship(2), ["A", 2], "h");
+  board.placeShip(new Ship(2), ["A", 7], "v");
 
   it("should add an hit point to the ship if the ship is present on those coordinates", () => {
     expect(board.receiveAttack("A", 2)).toMatch(/HIT!/);
@@ -47,5 +48,12 @@ describe("receiveAttack method tests", () => {
 
   it("should records the missed attack", () => {
     expect(board.missedAttacks[0]).toEqual(["A", 5]);
+  });
+
+  it("should be able to tell if all the ships are sunk", () => {
+    board.receiveAttack("A", 2);
+    board.receiveAttack("A", 7);
+    board.receiveAttack("B", 7);
+    expect(board.allSunk()).toBe(true);
   });
 });
