@@ -23,10 +23,16 @@ const makeBoard = () => {
 export default class Board {
   constructor() {
     this.board = makeBoard();
+    this.shipsOnBoard = [];
     this.missedAttacks = [];
   }
 
+  allSunk() {
+    return this.shipsOnBoard.every((ship) => ship.sunk === true);
+  }
+
   placeShip(ship, [coordinatesX, coordinatesY], position) {
+    this.shipsOnBoard.push(ship);
     const verticalArray = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
     const key = Object.keys(this.board).indexOf(coordinatesX);
 
