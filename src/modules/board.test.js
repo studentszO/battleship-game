@@ -1,9 +1,5 @@
 import Board from "./board";
 import Ship from "./ships";
-import Player from "./players";
-
-const x = new Player("szo");
-console.log(x.board);
 
 describe("Place ships tests", () => {
   const board = new Board();
