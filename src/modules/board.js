@@ -47,7 +47,7 @@ export default class Board {
 
     if (coordinatesY - 1 + ship.length > 10 || position === "v") {
       for (let i = 0; i < ship.length; i++)
-        this.board[verticalArray[key + i]][coordinatesY] = ship;
+        this.board[verticalArray[key + i]][coordinatesY - 1] = ship;
     } else {
       for (let i = 0; i < ship.length; i++)
         this.board[coordinatesX][coordinatesY - 1 + i] = ship;
