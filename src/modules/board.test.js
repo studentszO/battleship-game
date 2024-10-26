@@ -32,3 +32,22 @@ describe("Board tests", () => {
     expect(board.board.G[7]).toMatchObject(ship);
   });
 });
+
+describe("receiveAttack method tests", () => {
+  const board = new Board();
+  board.placeShip(new Ship(2), ["A", 2], "h");
+
+  it("should add an hit point to the ship if the ship is present on those coordinates", () => {
+    expect(board.receiveAttack("A", 2)).toMatch(/HIT!/);
+  });
+
+  it("should say when there is no ship on the coordinates", () => {
+    expect(board.receiveAttack("A", 5)).toMatch(/No ship/);
+  });
+
+  it("should records the missed attack", () => {
+    expect(board.missedAttacks[0]).toEqual(["A", 5]);
+  });
+
+  //   it("should");
+});
