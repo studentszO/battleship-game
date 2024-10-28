@@ -8,12 +8,12 @@ import makeLineWithColumns from "./modules/dom";
 // one = player ~ two = computer
 function makeBoard(board, player) {
   const container = document.querySelector(`.player-${player}-board`);
-  Object.keys(board.board).forEach((key) => {
+  Object.keys(board.cells).forEach((key) => {
     container.appendChild(makeLineWithColumns(key));
   });
 }
 
-const playerBoard = new Board();
-const computerBoard = new Board();
+const player = new Player("chryszO");
+const computer = new Player("Computer");
 
-makeBoard(playerBoard, "one");
+makeBoard(player.board, "one");
