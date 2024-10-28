@@ -19,9 +19,9 @@ const makeBoard = () => {
   return boardObject;
 };
 
-export default class Board {
+export default class GameBoard {
   constructor() {
-    this.board = makeBoard();
+    this.cells = makeBoard();
     this.shipsOnBoard = [];
     this.missedAttacks = [];
   }
@@ -31,9 +31,11 @@ export default class Board {
   }
 
   placeShip(ship, [coordinatesX, coordinatesY], position) {
+    // coordinatesX = vertical / columns (i.g: A or C...)
+    // coordinatesY = horizontal / inline (i.g: 2 or 7...)
     this.shipsOnBoard.push(ship);
     const verticalArray = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
-    const key = Object.keys(this.board).indexOf(coordinatesX);
+    const key = Object.keys(this.cells).indexOf(coordinatesX);
 
     if (position !== "v" && position !== "h")
       throw new Error("Wrong position parameter: use only v or h");
@@ -46,15 +48,15 @@ export default class Board {
 
     if (coordinatesY - 1 + ship.length > 10 || position === "v") {
       for (let i = 0; i < ship.length; i++)
-        this.board[verticalArray[key + i]][coordinatesY - 1] = ship;
+        this.cells[verticalArray[key + i]][coordinatesY - 1] = ship;
     } else {
       for (let i = 0; i < ship.length; i++)
-        this.board[coordinatesX][coordinatesY - 1 + i] = ship;
+        this.cells[coordinatesX][coordinatesY - 1 + i] = ship;
     }
   }
 
   receiveAttack(coordinatesX, coordinatesY) {
-    const target = this.board[coordinatesX][coordinatesY - 1];
+    const target = this.cells[coordinatesX][coordinatesY - 1];
     if (typeof target !== "number") {
       target.hit();
       return "Target HIT!";

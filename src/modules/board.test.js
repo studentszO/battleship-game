@@ -1,8 +1,8 @@
-import Board from "./board";
+import GameBoard from "./board";
 import Ship from "./ships";
 
 describe("Place ships tests", () => {
-  const board = new Board();
+  const board = new GameBoard();
   it("should throw an error if no position is given", () => {
     const ship = new Ship(2);
     expect(() => board.placeShip(ship, ["A", 9])).toThrow();
@@ -11,14 +11,14 @@ describe("Place ships tests", () => {
   it("should place a ship on the board horizontally", () => {
     const ship = new Ship(2);
     board.placeShip(ship, ["A", 9], "h");
-    expect(board.board.A[8]).toMatchObject(ship);
-    expect(board.board.A[9]).toMatchObject(ship);
+    expect(board.cells.A[8]).toMatchObject(ship);
+    expect(board.cells.A[9]).toMatchObject(ship);
   });
 
   it("should NOT place a ship on the board horizontally if the length of the boat is greater than the board", () => {
     const ship = new Ship(2);
     board.placeShip(ship, ["B", 9], "h");
-    expect(board.board.B[10]).toBeUndefined();
+    expect(board.cells.B[10]).toBeUndefined();
   });
 
   it("should NOT place a ship on the board if the length of the boat is greater than the board horizontally AND vertically", () => {
@@ -29,12 +29,12 @@ describe("Place ships tests", () => {
   it("should place a ship on the board vertically", () => {
     const ship = new Ship(5);
     board.placeShip(ship, ["C", 7], "v");
-    expect(board.board.G[6]).toMatchObject(ship);
+    expect(board.cells.G[6]).toMatchObject(ship);
   });
 });
 
 describe("receiveAttack method tests", () => {
-  const board = new Board();
+  const board = new GameBoard();
   board.placeShip(new Ship(2), ["A", 2], "h");
   board.placeShip(new Ship(2), ["A", 7], "v");
 

@@ -1,8 +1,8 @@
-import Board from "./board";
+import GameBoard from "./board";
 
 export default class Player {
   constructor(name) {
     this.name = name;
-    this.board = new Board();
+    this.board = new GameBoard();
   }
 }
