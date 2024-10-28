@@ -27,10 +27,14 @@ html {
 
 .player-one-board,
 player-two-board {
-  display: flex;
   width: 100%;
   border-left: 1px solid rgb(212, 212, 212);
   border-top: 1px solid rgb(212, 212, 212);
+}
+
+.player-one-board > div,
+player-two-board > div {
+  display: flex;
 }
 
 [class^="column"] {
