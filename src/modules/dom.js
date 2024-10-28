@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 const makeLineWithColumns = (cell) => {
-  const lineDiv = document.createElement("div");
+  // const lineDiv = document.createElement("div");
+  const lineDiv = [];
 
   const makeColumnCell = (className, id) => {
     const div = document.createElement("div");
@@ -10,7 +11,7 @@ const makeLineWithColumns = (cell) => {
   };
 
   for (let i = 0; i < 10; i++)
-    lineDiv.appendChild(makeColumnCell(`column${i}`, `${cell}${i + 1}`));
+    lineDiv.push(makeColumnCell(`column${i}`, `${cell}${i + 1}`));
 
   return lineDiv;
 };
