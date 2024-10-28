@@ -1,5 +1,6 @@
 :root {
   font-family: sans-serif;
+  --cell-width-height: 60px;
 }
 
 * {
@@ -16,4 +17,26 @@ html {
   align-items: center;
   height: 100vh;
   background-image: url(./assets/bg.png);
+}
+
+.game-container {
+  width: calc(var(--cell-width-height) * 10);
+  height: calc(var(--cell-width-height) * 10);
+  background-color: rgb(78, 78, 78);
+}
+
+.player-one-board,
+player-two-board {
+  display: flex;
+  width: 100%;
+  border-left: 1px solid rgb(212, 212, 212);
+  border-top: 1px solid rgb(212, 212, 212);
+}
+
+[class^="column"] {
+  width: var(--cell-width-height);
+  height: var(--cell-width-height);
+  border: 1px solid rgb(212, 212, 212);
+  border-left: 0;
+  border-top: 0;
 }
