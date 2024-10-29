@@ -16,13 +16,18 @@ function makeBoard(board, player) {
 
 let boatNumber = 0;
 
+function handleCellSplit(cell) {
+  const [x, y] = cell.match(/[A-Z]+|[0-9]+/g);
+  return [x, y];
+}
+
 function addShip(player, shipLength, cell, orientation) {
   // Separate cell arg into it's letter and it's number
-  const [x, y] = cell.match(/[A-Z]+|[0-9]+/g);
+  const coordinates = handleCellSplit(cell);
   const newShip = new Ship(shipLength);
   const whichPlayer = player.name === "Computer" ? "two" : "one";
 
-  player.board.placeShip(newShip, [x, y], orientation);
+  player.board.placeShip(newShip, coordinates, orientation);
 
   const boatsArray = [];
 
@@ -69,3 +74,9 @@ addShip(player, 5, "A3", "h");
 addShip(player, 2, "J1", "h");
 addShip(player, 4, "H6", "h");
 addShip(player, 3, "F2", "h");
+
+addShip(computer, 3, "C2", "h");
+addShip(computer, 5, "A3", "h");
+addShip(computer, 2, "J1", "h");
+addShip(computer, 4, "H6", "h");
+addShip(computer, 3, "F2", "h");
