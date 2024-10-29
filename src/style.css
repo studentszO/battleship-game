@@ -33,6 +33,7 @@ player-two-board {
   border-top: 1px solid rgb(212, 212, 212);
   display: flex;
   flex-flow: row wrap;
+  position: relative;
 }
 
 .player-one-board > div,
@@ -42,6 +43,42 @@ player-two-board {
   border: 1px solid rgb(212, 212, 212);
   border-left: 0;
   border-top: 0;
+}
+
+.player-one-board > .board-numbers,
+.player-two-board > .board-numbers {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  width: calc(var(--cell-width-height) * 10);
+  top: -38px;
+  border: none;
+}
+
+.player-one-board > .board-letters,
+.player-two-board > .board-letters {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: calc(var(--cell-width-height) * 10);
+  left: -52px;
+  border: none;
+}
+
+.board-numbers > span,
+.board-letters > span {
+  width: var(--cell-width-height);
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 600;
+  color: white;
+}
+.board-letters > span {
+  height: var(--cell-width-height);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 [class^="boat"] {
