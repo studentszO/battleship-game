@@ -28,16 +28,15 @@ html {
 .player-one-board,
 player-two-board {
   width: 100%;
+  box-sizing: content-box;
   border-left: 1px solid rgb(212, 212, 212);
   border-top: 1px solid rgb(212, 212, 212);
+  display: flex;
+  flex-flow: row wrap;
 }
 
 .player-one-board > div,
-player-two-board > div {
-  display: flex;
-}
-
-[class^="column"] {
+.player-two-board > div {
   width: var(--cell-width-height);
   height: var(--cell-width-height);
   border: 1px solid rgb(212, 212, 212);
