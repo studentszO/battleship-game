@@ -43,3 +43,69 @@ player-two-board {
   border-left: 0;
   border-top: 0;
 }
+
+[class^="boat"] {
+  display: grid;
+  position: relative;
+  align-items: center;
+}
+
+/* HORIZONTAL BOAT SETUP */
+.boat-start-h::before {
+  position: absolute;
+  width: calc(100% - 9px);
+  height: 75%;
+  justify-self: end;
+  content: "";
+  background-color: rgba(19, 19, 19, 0.87);
+  border: 2px solid rgb(51, 51, 51);
+  border-right: 0;
+  border-radius: 50% 0 0 50%;
+}
+
+.boat-start-h-hit::after {
+  justify-self: end;
+  margin-right: 9px;
+  z-index: 1;
+  content: url(./assets/fire.svg);
+}
+
+.boat-mid-h-hit::after {
+  justify-self: end;
+  margin: auto;
+  z-index: 1;
+  content: url(./assets/fire.svg);
+}
+
+.boat-end-h-hit::after {
+  justify-self: start;
+  margin-left: 9px;
+  z-index: 1;
+  content: url(./assets/fire.svg);
+}
+
+.boat-mid-h::before {
+  content: "";
+  position: absolute;
+  width: calc(100% + 1px);
+  height: 75%;
+  align-self: center;
+  margin: -1px;
+  background-color: rgb(19, 19, 19, 0.87);
+  border: 2px solid rgb(51, 51, 51);
+  border-right: 0;
+  border-left: 0;
+}
+
+.boat-end-h::before {
+  content: "";
+  width: calc(100% - 9px);
+  position: absolute;
+  align-self: center;
+  margin: -1px;
+  height: 75%;
+  background-color: rgb(19, 19, 19, 0.87);
+  border-radius: 0 75% 75% 0;
+  border: 2px solid rgb(51, 51, 51);
+  border-left: 0;
+}
