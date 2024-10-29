@@ -157,3 +157,12 @@ html {
   border: 2px solid rgb(51, 51, 51);
   border-left: 0;
 }
+
+.player-two-board [class^="ship"]::before {
+  display: none;
+}
+
+.player-two-board [class^="ship"]::after {
+  display: flex;
+  justify-self: center;
+}
