@@ -32,43 +32,57 @@ export function getPlayerBoardNode(player) {
   return document.querySelector(`.player-${whichPlayer}-board`);
 }
 
+// Separate cell arg into it's letter and it's number
 function handleCellSplit(cell) {
   const [x, y] = cell.match(/[A-Z]+|[0-9]+/g);
   return [x, y];
 }
 
+function getShipCells(player, ship) {
+  const cells = [];
+
+  Object.keys(player.board.cells).forEach((key) =>
+    player.board.cells[key].forEach((cellID, index) => {
+      if (typeof cellID !== "number" && cellID === ship)
+        cells.push(key + (index + 1));
+    }),
+  );
+
+  return cells;
+}
+
+function getShipNodes(player, array) {
+  const nodesArray = array.map((cellID) => [
+    getPlayerBoardNode(player).querySelector(`div[data-cell='${cellID}']`),
+  ]);
+  return nodesArray;
+}
+
+function handleNodesClasses(nodesArray, shipOrientation) {
+  nodesArray.forEach((node, index) => {
+    if (index === 0) node[0].classList.add(`ship-start-${shipOrientation}`);
+    if (index === nodesArray.length - 1)
+      node[0].classList.add(`ship-end-${shipOrientation}`);
+    if (index > 0 && index < nodesArray.length - 1)
+      node[0].classList.add(`ship-mid-${shipOrientation}`);
+  });
+}
+
 export function addShip(player, shipLength, cell, orientation) {
-  // Separate cell arg into it's letter and it's number
   const coordinates = handleCellSplit(cell);
   const newShip = new Ship(shipLength);
 
   player.board.placeShip(newShip, coordinates, orientation);
 
-  const boatsArray = [];
+  const shipCells = getShipCells(player, newShip);
+  const shipNodes = getShipNodes(player, shipCells);
 
-  Object.keys(player.board.cells).forEach((key) =>
-    player.board.cells[key].forEach((cellID, index) => {
-      if (typeof cellID !== "number" && cellID === newShip)
-        boatsArray.push(key + (index + 1));
-    }),
-  );
-
-  const boatsCells = boatsArray.map((cellID) => [
-    getPlayerBoardNode(player).querySelector(`div[data-cell='${cellID}']`),
-  ]);
-
-  boatsCells.forEach((node, index) => {
-    if (index === 0) node[0].classList.add(`boat-start-${orientation}`);
-    if (index === boatsCells.length - 1)
-      node[0].classList.add(`boat-end-${orientation}`);
-    if (index > 0 && index < boatsCells.length - 1)
-      node[0].classList.add(`boat-mid-${orientation}`);
-  });
+  handleNodesClasses(shipNodes, orientation);
 }
 
 function updateBoardWhenAttacking(boardNode, cell) {
   const node = boardNode.querySelector(`[data-cell=${cell}]`);
-  const hitOrMiss = node.className.match(/boat/) ? "hit" : "miss";
+  const hitOrMiss = node.className.match(/ship/) ? "hit" : "miss";
   node.classList.add(hitOrMiss);
 }
 
