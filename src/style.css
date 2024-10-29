@@ -105,23 +105,21 @@ html {
   border-radius: 50% 0 0 50%;
 }
 
-.boat-start-h-hit::after {
+.boat-start-h.hit::after {
   justify-self: end;
-  margin-right: 9px;
   z-index: 1;
   content: url(./assets/fire.svg);
 }
 
-.boat-mid-h-hit::after {
+.boat-mid-h.hit::after {
   justify-self: end;
   margin: auto;
   z-index: 1;
   content: url(./assets/fire.svg);
 }
 
-.boat-end-h-hit::after {
+.boat-end-h.hit::after {
   justify-self: start;
-  margin-left: 9px;
   z-index: 1;
   content: url(./assets/fire.svg);
 }
