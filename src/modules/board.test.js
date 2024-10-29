@@ -21,6 +21,11 @@ describe("Place ships tests", () => {
     expect(board.cells.B[10]).toBeUndefined();
   });
 
+  it("should NOT place a ship on the board if the length of the boat is greater than the board vertically", () => {
+    const ship = new Ship(2);
+    expect(() => board.placeShip(ship, ["J", 1], "v")).toThrow();
+  });
+
   it("should NOT place a ship on the board if the length of the boat is greater than the board horizontally AND vertically", () => {
     const ship = new Ship(2);
     expect(() => board.placeShip(ship, ["J", 10], "h")).toThrow();

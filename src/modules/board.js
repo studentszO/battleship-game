@@ -42,7 +42,7 @@ export default class GameBoard {
 
     if (
       (position === "h" && coordinatesY - 1 + ship.length > 10) ||
-      (position === "h" && key + ship.length > 10)
+      (position === "v" && key + ship.length > 10)
     )
       throw new Error("Can't place this ship here");
 
