@@ -86,6 +86,14 @@ html {
   align-items: center;
 }
 
+.miss::after {
+  display: flex;
+  margin-top: 2px;
+  justify-content: center;
+  content: url(./assets/crossmark.svg);
+  opacity: 0.9;
+}
+
 [class^="boat"] {
   display: grid;
   position: relative;
