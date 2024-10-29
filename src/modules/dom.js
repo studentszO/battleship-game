@@ -108,3 +108,13 @@ export function eventListener(players) {
     if (cell) attackCell(playerToAttack, cell);
   });
 }
+
+// IA player:
+function randomizeCellForIA() {
+  const verticalArray = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
+  const [x, y] = [
+    verticalArray[Math.round(Math.random() * 10)],
+    Math.round(Math.random() * 9) + 1,
+  ];
+  return [x, y];
+}
