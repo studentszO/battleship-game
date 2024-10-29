@@ -3,8 +3,6 @@
 
 import Ship from "./ships";
 
-let boatNumber = 0;
-
 function makeCellsLine(cell) {
   const lineDiv = [];
 
@@ -50,21 +48,16 @@ export function addShip(player, shipLength, cell, orientation) {
 
   Object.keys(player.board.cells).forEach((key) =>
     player.board.cells[key].forEach((cellID, index) => {
-      const toPush = [key + (index + 1), boatNumber];
       if (typeof cellID !== "number" && cellID === newShip)
-        boatsArray.push(toPush);
+        boatsArray.push(key + (index + 1));
     }),
   );
 
-  const boatsCells = boatsArray.map((coordinates) => [
-    getPlayerBoardNode(player).querySelector(
-      `div[data-cell='${[...coordinates][0]}']`,
-    ),
-    coordinates[1],
+  const boatsCells = boatsArray.map((cellID) => [
+    getPlayerBoardNode(player).querySelector(`div[data-cell='${cellID}']`),
   ]);
 
   boatsCells.forEach((node, index) => {
-    node[0].classList.add(`boat${node[1]}`);
     if (index === 0) node[0].classList.add(`boat-start-${orientation}`);
     if (index === boatsCells.length - 1)
       node[0].classList.add(`boat-end-${orientation}`);
