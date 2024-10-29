@@ -55,6 +55,7 @@ const player = new Player("chryszO");
 const computer = new Player("Computer");
 
 makeBoard(player.board, "one");
+makeBoard(player.board, "two");
 
 // FOR TESTING PURPOSES ONLY!
 // PLACE SHIP ON C3 !
