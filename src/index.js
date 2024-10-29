@@ -25,7 +25,6 @@ function addShip(player, shipLength, cell, orientation) {
   // Separate cell arg into it's letter and it's number
   const coordinates = handleCellSplit(cell);
   const newShip = new Ship(shipLength);
-  const whichPlayer = player.name === "Computer" ? "two" : "one";
 
   player.board.placeShip(newShip, coordinates, orientation);
 
@@ -40,8 +39,8 @@ function addShip(player, shipLength, cell, orientation) {
   );
 
   const boatsCells = boatsArray.map((coordinates) => [
-    document.querySelector(
-      `.player-${whichPlayer}-board div[data-cell='${[...coordinates][0]}']`,
+    getPlayerBoardNode(player).querySelector(
+      `div[data-cell='${[...coordinates][0]}']`,
     ),
     coordinates[1],
   ]);
@@ -54,6 +53,11 @@ function addShip(player, shipLength, cell, orientation) {
     if (index > 0 && index < boatsCells.length - 1)
       node[0].classList.add(`boat-mid-${orientation}`);
   });
+}
+
+function getPlayerBoardNode(player) {
+  const whichPlayer = player.name === "Computer" ? "two" : "one";
+  return document.querySelector(`.player-${whichPlayer}-board`);
 }
 
 const player = new Player("chryszO");
@@ -69,6 +73,7 @@ makeBoard(player.board, "two");
 // HIT THE SHIP ON C3!
 // player.board.cells["C"][2].hit();
 console.log(player.board);
+console.log(computer.board);
 addShip(player, 3, "C2", "h");
 addShip(player, 5, "A3", "h");
 addShip(player, 2, "J1", "h");
