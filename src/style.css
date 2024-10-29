@@ -94,14 +94,14 @@ html {
   opacity: 0.9;
 }
 
-[class^="boat"] {
+[class^="ship"] {
   display: grid;
   position: relative;
   align-items: center;
 }
 
-/* HORIZONTAL BOAT SETUP */
-.boat-start-h::before {
+/* HORIZONTAL ship SETUP */
+.ship-start-h::before {
   position: absolute;
   width: calc(100% - 9px);
   height: 75%;
@@ -113,26 +113,26 @@ html {
   border-radius: 50% 0 0 50%;
 }
 
-.boat-start-h.hit::after {
+.ship-start-h.hit::after {
   justify-self: end;
   z-index: 1;
   content: url(./assets/fire.svg);
 }
 
-.boat-mid-h.hit::after {
+.ship-mid-h.hit::after {
   justify-self: end;
   margin: auto;
   z-index: 1;
   content: url(./assets/fire.svg);
 }
 
-.boat-end-h.hit::after {
+.ship-end-h.hit::after {
   justify-self: start;
   z-index: 1;
   content: url(./assets/fire.svg);
 }
 
-.boat-mid-h::before {
+.ship-mid-h::before {
   content: "";
   position: absolute;
   width: calc(100% + 1px);
@@ -145,7 +145,7 @@ html {
   border-left: 0;
 }
 
-.boat-end-h::before {
+.ship-end-h::before {
   content: "";
   width: calc(100% - 9px);
   position: absolute;
