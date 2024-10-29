@@ -1,6 +1,6 @@
 /* global document */
 import "./style.css";
-import Board from "./modules/board";
+import Ship from "./modules/ships";
 import Player from "./modules/players";
 import makeLineWithColumns from "./modules/dom";
 
@@ -9,7 +9,45 @@ import makeLineWithColumns from "./modules/dom";
 function makeBoard(board, player) {
   const container = document.querySelector(`.player-${player}-board`);
   Object.keys(board.cells).forEach((key) => {
-    container.appendChild(makeLineWithColumns(key));
+    const lineOfCells = makeLineWithColumns(key);
+    lineOfCells.forEach((node) => container.append(node));
+  });
+}
+
+let boatNumber = 0;
+
+function addShip(player, shipLength, cell, orientation) {
+  // Separate cell arg into it's letter and it's number
+  const [x, y] = cell.match(/[A-Z]+|[0-9]+/g);
+  const newShip = new Ship(shipLength);
+  const whichPlayer = player.name === "Computer" ? "two" : "one";
+
+  player.board.placeShip(newShip, [x, y], orientation);
+
+  const boatsArray = [];
+
+  Object.keys(player.board.cells).forEach((key) =>
+    player.board.cells[key].forEach((cellID, index) => {
+      const toPush = [key + (index + 1), boatNumber];
+      if (typeof cellID !== "number" && cellID === newShip)
+        boatsArray.push(toPush);
+    }),
+  );
+
+  const boatsCells = boatsArray.map((coordinates) => [
+    document.querySelector(
+      `.player-${whichPlayer}-board div[data-cell='${[...coordinates][0]}']`,
+    ),
+    coordinates[1],
+  ]);
+
+  boatsCells.forEach((node, index) => {
+    node[0].classList.add(`boat${node[1]}`);
+    if (index === 0) node[0].classList.add(`boat-start-${orientation}`);
+    if (index === boatsCells.length - 1)
+      node[0].classList.add(`boat-end-${orientation}`);
+    if (index > 0 && index < boatsCells.length - 1)
+      node[0].classList.add(`boat-mid-${orientation}`);
   });
 }
 
@@ -17,3 +55,16 @@ const player = new Player("chryszO");
 const computer = new Player("Computer");
 
 makeBoard(player.board, "one");
+
+// FOR TESTING PURPOSES ONLY!
+// PLACE SHIP ON C3 !
+// player.board.placeShip(new Ship(3), ["C", 3], "h");
+
+// HIT THE SHIP ON C3!
+// player.board.cells["C"][2].hit();
+console.log(player.board);
+addShip(player, 3, "C2", "h");
+addShip(player, 5, "A3", "h");
+addShip(player, 2, "J1", "h");
+addShip(player, 4, "H6", "h");
+addShip(player, 3, "F2", "h");
