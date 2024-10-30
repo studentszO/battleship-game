@@ -90,9 +90,9 @@ export default class GameBoard {
     const target = this.cells[coordinatesX][coordinatesY - 1];
     if (typeof target !== "number") {
       target.hit();
-      return "Target HIT!";
+      return true;
     }
     this.missedAttacks.push([coordinatesX, coordinatesY]);
-    return "No ship on those coordinates! :(";
+    return false;
   }
 }
