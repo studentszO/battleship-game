@@ -70,6 +70,15 @@ html {
   border: none;
 }
 
+.player-two-board [class^="ship"]::before {
+  display: none;
+}
+
+.player-two-board [class^="ship"]::after {
+  display: flex;
+  justify-self: center;
+}
+
 .board-numbers > span,
 .board-letters > span {
   width: var(--cell-width-height);
@@ -108,8 +117,9 @@ div[data-cell]:hover {
   background-color: inherit;
 }
 
-/* HORIZONTAL ship SETUP */
-.ship-start-h::before {
+/* Ship setup */
+.ship-start-h::before,
+.ship-start-v::before {
   position: absolute;
   width: calc(100% - 9px);
   height: 75%;
@@ -117,43 +127,20 @@ div[data-cell]:hover {
   content: "";
   background-color: rgba(19, 19, 19, 0.87);
   border: 2px solid rgb(51, 51, 51);
-  border-right: 0;
-  border-radius: 50% 0 0 50%;
 }
 
-.ship-start-h.hit::after {
-  justify-self: end;
-  z-index: 1;
-  content: url(./assets/fire.svg);
-}
-
-.ship-mid-h.hit::after {
-  justify-self: end;
-  margin: auto;
-  z-index: 1;
-  content: url(./assets/fire.svg);
-}
-
-.ship-end-h.hit::after {
-  justify-self: start;
-  z-index: 1;
-  content: url(./assets/fire.svg);
-}
-
-.ship-mid-h::before {
+.ship-mid-h::before,
+.ship-mid-v::before {
   content: "";
   position: absolute;
-  width: calc(100% + 1px);
-  height: 75%;
   align-self: center;
   margin: -1px;
   background-color: rgb(19, 19, 19, 0.87);
   border: 2px solid rgb(51, 51, 51);
-  border-right: 0;
-  border-left: 0;
 }
 
-.ship-end-h::before {
+.ship-end-h::before,
+.ship-end-v::before {
   content: "";
   width: calc(100% - 9px);
   position: absolute;
@@ -161,16 +148,78 @@ div[data-cell]:hover {
   margin: -1px;
   height: 75%;
   background-color: rgb(19, 19, 19, 0.87);
-  border-radius: 0 75% 75% 0;
   border: 2px solid rgb(51, 51, 51);
+}
+
+/* HORIZONTAL ship SETUP */
+.ship-start-h::before {
+  border-right: 0;
+  border-radius: 50% 0 0 50%;
+}
+
+.ship-mid-h::before {
+  width: calc(100% + 1px);
+  height: 75%;
+  border-right: 0;
   border-left: 0;
 }
 
-.player-two-board [class^="ship"]::before {
-  display: none;
+.ship-end-h::before {
+  border-radius: 0 75% 75% 0;
+  border-left: 0;
 }
 
-.player-two-board [class^="ship"]::after {
-  display: flex;
+.ship-start-h.hit::after,
+.ship-start-v.hit::after {
+  justify-self: end;
+  z-index: 1;
+  content: url(./assets/fire.svg);
+}
+
+.ship-mid-h.hit::after,
+.ship-mid-v.hit::after {
+  justify-self: end;
+  margin: auto;
+  z-index: 1;
+  content: url(./assets/fire.svg);
+}
+
+.ship-end-h.hit::after,
+.ship-end-v.hit::after {
+  justify-self: start;
+  z-index: 1;
+  content: url(./assets/fire.svg);
+}
+
+/* VERTICAL ship SETUP */
+.ship-start-v::before {
   justify-self: center;
+  align-self: end;
+  border-radius: 50% 50% 0 0;
+  border-bottom: 0;
+}
+
+.ship-mid-v::before {
+  height: calc(100% + 1px);
+  width: 75%;
+  border-top: 0;
+  border-bottom: 0;
+  justify-self: center;
+}
+
+.ship-end-v::before {
+  justify-self: center;
+  align-self: start;
+  border-radius: 0 0 50% 50%;
+  border-top: 0;
+}
+
+.ship-start-v.hit::after {
+  justify-self: center;
+  align-self: end;
+}
+
+.ship-end-v.hit::after {
+  justify-self: center;
+  align-self: start;
 }
