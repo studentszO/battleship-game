@@ -36,6 +36,13 @@ describe("Place ships tests", () => {
     board.placeShip(ship, ["C", 7], "v");
     expect(board.cells.G[6]).toMatchObject(ship);
   });
+
+  it("should not place a ship if one is already there", () => {
+    const shipFive = new Ship(5);
+    const shipTwo = new Ship(2);
+    board.placeShip(shipFive, ["A", 3], "v");
+    expect(() => board.placeShip(shipTwo, ["E", 2], "h")).toThrow();
+  });
 });
 
 describe("receiveAttack method tests", () => {
