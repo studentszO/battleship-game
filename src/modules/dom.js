@@ -175,5 +175,13 @@ export function eventListener(playersArray) {
 
     // then IA Attacks
     IATurn(playersArray[0]);
+    checkWinner(playersArray);
   });
+}
+
+function checkWinner(players) {
+  if (players[0].board.shipsOnBoard.every((ship) => ship.sunk))
+    alert(`${players[1].name} is the winner`);
+  if (players[1].board.shipsOnBoard.every((ship) => ship.sunk))
+    alert(`${players[0].name} is the winner`);
 }
