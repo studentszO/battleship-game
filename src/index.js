@@ -3,22 +3,23 @@ import Player from "./modules/players";
 import { makeBoard, eventListener, addShip } from "./modules/dom";
 
 // Create players
-const player = new Player("chryszO");
+const human = new Player("chryszO");
 const computer = new Player("Computer");
 
 // Make the boards for each player
-makeBoard(player.board, "one");
-makeBoard(player.board, "two");
+makeBoard(human);
+makeBoard(computer);
 
 // Start listening to the DOM events
-eventListener([player, computer]);
+eventListener([human, computer]);
 
 // Add ships for each player
-addShip(player, 3, "C2", "h");
-addShip(player, 5, "A3", "h");
-addShip(player, 2, "J1", "h");
-addShip(player, 4, "H6", "h");
-addShip(player, 3, "F2", "h");
+addShip(human, 3, "C2", "v");
+addShip(human, 5, "A3", "v");
+addShip(human, 2, "J1", "h");
+// addShip(player, 2, "E2", "h");
+addShip(human, 4, "H6", "h");
+addShip(human, 3, "F2", "h");
 
 addShip(computer, 3, "C2", "h");
 addShip(computer, 5, "A3", "h");
