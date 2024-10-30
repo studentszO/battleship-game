@@ -94,6 +94,12 @@ function getShipNodes(player, array) {
 }
 
 function handleNodesClasses(nodesArray, shipOrientation) {
+  // if statement to not show enemy ships on DOM
+  if (
+    nodesArray[0][0].parentNode !==
+    document.querySelector(".game-container > div:first-of-type")
+  )
+    return;
   nodesArray.forEach((node, index) => {
     if (index === 0) node[0].classList.add(`ship-start-${shipOrientation}`);
     if (index === nodesArray.length - 1)
