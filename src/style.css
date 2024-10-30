@@ -28,8 +28,8 @@ html {
   padding: 50px;
 }
 
-.player-one-board,
-.player-two-board {
+.game-container > div:first-of-type,
+.game-container > div:last-of-type {
   width: calc(var(--cell-width-height) * 10);
   height: calc(var(--cell-width-height) * 10);
   box-sizing: content-box;
@@ -40,8 +40,8 @@ html {
   position: relative;
 }
 
-.player-one-board > div,
-.player-two-board > div {
+.game-container > div:first-of-type > div,
+.game-container > div:last-of-type > div {
   width: var(--cell-width-height);
   height: var(--cell-width-height);
   border: 1px solid rgb(212, 212, 212);
@@ -49,8 +49,8 @@ html {
   border-top: 0;
 }
 
-.player-one-board > .board-numbers,
-.player-two-board > .board-numbers {
+.game-container > div:first-of-type > .board-numbers,
+.game-container > div:last-of-type > .board-numbers {
   position: absolute;
   display: flex;
   justify-content: center;
@@ -59,8 +59,8 @@ html {
   border: none;
 }
 
-.player-one-board > .board-letters,
-.player-two-board > .board-letters {
+.game-container > div:first-of-type > .board-letters,
+.game-container > div:last-of-type > .board-letters {
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -70,11 +70,11 @@ html {
   border: none;
 }
 
-.player-two-board [class^="ship"]::before {
+.game-container > div:last-of-type [class^="ship"]::before {
   display: none;
 }
 
-.player-two-board [class^="ship"]::after {
+.game-container > div:last-of-type [class^="ship"]::after {
   display: flex;
   justify-self: center;
 }
