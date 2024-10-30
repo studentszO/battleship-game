@@ -137,28 +137,43 @@ function attackCell(player, cell) {
   return cell.classList.add("hit");
 }
 
+function randomizeCellForIA() {
+  const verticalArray = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
+
+  const [x, y] = [
+    verticalArray[Math.floor(Math.random() * 10)],
+    Math.round(Math.random() * 9) + 1,
+  ];
+
+  return [x, y];
+}
+
+function IATurn(ia) {
+  const IAcoords = randomizeCellForIA();
+
+  const IAtarget = document.querySelector(
+    `.game-container > div:first-of-type div[data-cell=${IAcoords.join("")}]`,
+  );
+
+  if (IAtarget.classList.contains("clicked")) return IATurn(ia);
+
+  attackCell(ia, IAtarget);
+}
+
 export function eventListener(playersArray) {
-  const gameContainer = document.querySelector(".game-container");
+  const gameContainer = document.querySelector(
+    ".game-container > div:last-of-type",
+  );
+
   gameContainer.addEventListener("click", (event) => {
     if (event.target.classList.contains("clicked")) return;
     if (!event.target.hasAttribute("data-cell")) return;
 
     event.target.classList.add("clicked");
-    const parentNode = event.target.parentElement.className;
-    const playerToAttack = parentNode.match(playersArray[0].name)
-      ? playersArray[0]
-      : playersArray[1];
 
-    attackCell(playerToAttack, event.target);
+    attackCell(playersArray[1], event.target);
+
+    // then IA Attacks
+    IATurn(playersArray[0]);
   });
-}
-
-// IA player:
-function randomizeCellForIA() {
-  const verticalArray = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
-  const [x, y] = [
-    verticalArray[Math.round(Math.random() * 10)],
-    Math.round(Math.random() * 9) + 1,
-  ];
-  return [x, y];
 }
