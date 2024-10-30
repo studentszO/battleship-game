@@ -1,6 +1,5 @@
 /* eslint-disable no-undef */
 /* global document */
-
 import Ship from "./ships";
 
 function makeCellsLine(cell) {
@@ -17,19 +16,54 @@ function makeCellsLine(cell) {
   return lineDiv;
 }
 
-// player must be "one" or "two"
-// one = player ~ two = computer
-export function makeBoard(board, player) {
-  const container = document.querySelector(`.player-${player}-board`);
-  Object.keys(board.cells).forEach((key) => {
+function makeDOMElement(element) {
+  return document.createElement(element);
+}
+
+function handleBoardLetters() {
+  const div = makeDOMElement("div");
+  div.classList.add("board-numbers");
+
+  for (let i = 0; i < 10; i++) {
+    const span = makeDOMElement("span");
+    span.textContent = i + 1;
+    div.appendChild(span);
+  }
+
+  return div;
+}
+
+function handleBoardNumbers() {
+  const div = makeDOMElement("div");
+  div.classList.add("board-letters");
+
+  for (let i = 0; i < 10; i++) {
+    const span = makeDOMElement("span");
+    span.textContent = String.fromCharCode(65 + i);
+    div.appendChild(span);
+  }
+
+  return div;
+}
+
+export function makeBoard(player) {
+  const gameContainer = document.querySelector(".game-container");
+  const boardContainer = makeDOMElement("div");
+
+  boardContainer.classList.add(`${player.name}-board`);
+
+  gameContainer.appendChild(boardContainer);
+  boardContainer.appendChild(handleBoardLetters());
+  boardContainer.appendChild(handleBoardNumbers());
+
+  Object.keys(player.board.cells).forEach((key) => {
     const lineOfCells = makeCellsLine(key);
-    lineOfCells.forEach((node) => container.append(node));
+    lineOfCells.forEach((node) => boardContainer.appendChild(node));
   });
 }
 
 export function getPlayerBoardNode(player) {
-  const whichPlayer = player.name === "Computer" ? "two" : "one";
-  return document.querySelector(`.player-${whichPlayer}-board`);
+  return document.querySelector(`.${player.name}-board`);
 }
 
 // Separate cell arg into it's letter and it's number
@@ -55,6 +89,7 @@ function getShipNodes(player, array) {
   const nodesArray = array.map((cellID) => [
     getPlayerBoardNode(player).querySelector(`div[data-cell='${cellID}']`),
   ]);
+
   return nodesArray;
 }
 
@@ -80,32 +115,35 @@ export function addShip(player, shipLength, cell, orientation) {
   handleNodesClasses(shipNodes, orientation);
 }
 
-function updateBoardWhenAttacking(boardNode, cell) {
-  const node = boardNode.querySelector(`[data-cell=${cell}]`);
-  const hitOrMiss = node.className.match(/ship/) ? "hit" : "miss";
-  node.classList.add(hitOrMiss);
+function updateMissCells(player) {
+  player.board.missedAttacks.forEach((coords) => {
+    const node = getPlayerBoardNode(player).querySelector(
+      `[data-cell=${coords.join("")}]`,
+    );
+    node.classList.add("clicked", "miss");
+  });
 }
 
 function attackCell(player, cell) {
-  const coordinates = handleCellSplit(cell);
-  const gameBoardCell = player.board.cells[coordinates[0]][coordinates[1] - 1];
-  if (typeof gameBoardCell !== "number") {
-    gameBoardCell.hit();
-  }
-  updateBoardWhenAttacking(getPlayerBoardNode(player), cell);
+  const coordinates = handleCellSplit(cell.getAttribute("data-cell"));
+  const isHit = player.board.receiveAttack(coordinates[0], coordinates[1]);
+  if (!isHit) return updateMissCells(player);
+  return cell.classList.add("hit");
 }
 
-export function eventListener(players) {
+export function eventListener(playersArray) {
   const gameContainer = document.querySelector(".game-container");
   gameContainer.addEventListener("click", (event) => {
     if (event.target.classList.contains("clicked")) return;
+    if (!event.target.hasAttribute("data-cell")) return;
 
-    const cell = event.target.getAttribute("data-cell");
     event.target.classList.add("clicked");
     const parentNode = event.target.parentElement.className;
-    const playerToAttack = parentNode.match(/two/) ? players[1] : players[0];
+    const playerToAttack = parentNode.match(playersArray[0].name)
+      ? playersArray[0]
+      : playersArray[1];
 
-    if (cell) attackCell(playerToAttack, cell);
+    attackCell(playerToAttack, event.target);
   });
 }
 
