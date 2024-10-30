@@ -19,6 +19,27 @@ const makeBoard = () => {
   return boardObject;
 };
 
+const getCharCode = (char) => char.charCodeAt(0);
+
+function getShipPlacementCells(
+  [coordinatesX, coordinatesY],
+  shipLength,
+  orientation,
+) {
+  const cellsArray = [];
+  const charCodeX = getCharCode(coordinatesX);
+
+  if (coordinatesY - 1 + shipLength > 10 || orientation === "v") {
+    for (let i = 0; i < shipLength; i++)
+      cellsArray.push([String.fromCharCode(charCodeX + i), coordinatesY - 1]);
+  } else {
+    for (let i = 0; i < shipLength; i++)
+      cellsArray.push([coordinatesX, coordinatesY - 1 + i]);
+  }
+
+  return cellsArray;
+}
+
 export default class GameBoard {
   constructor() {
     this.cells = makeBoard();
@@ -30,26 +51,27 @@ export default class GameBoard {
     return this.shipsOnBoard.every((ship) => ship.sunk === true);
   }
 
-  getShipPlacementCells([coordinatesX, coordinatesY], shipLength, orientation) {
-    const cellsArray = [];
+  isEmptyCells(array) {
+    return array.every(
+      (cell) => typeof this.cells[cell[0]][cell[1]] === "number",
+    );
+  }
 
-    if (coordinatesY - 1 + shipLength > 10 || orientation === "v") {
-      for (let i = 0; i < shipLength; i++)
-        cellsArray.push(this.cells[coordinatesX][coordinatesY - 1]);
-    } else {
-      for (let i = 0; i < shipLength; i++)
-        cellsArray.push(this.cells[coordinatesX][coordinatesY - 1 + i]);
-    }
-
-    return cellsArray;
+  validateShip(array, ship) {
+    array.forEach((cell) => (this.cells[cell[0]][cell[1]] = ship));
   }
 
   placeShip(ship, [coordinatesX, coordinatesY], position) {
     // coordinatesX = vertical / columns (i.g: A or C...)
     // coordinatesY = horizontal / inline (i.g: 2 or 7...)
-    this.shipsOnBoard.push(ship);
-    const verticalArray = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
     const key = Object.keys(this.cells).indexOf(coordinatesX);
+    const shipCells = getShipPlacementCells(
+      [coordinatesX, coordinatesY],
+      ship.length,
+      position,
+    );
+
+    this.shipsOnBoard.push(ship);
 
     if (position !== "v" && position !== "h")
       throw new Error("Wrong position parameter: use only v or h");
@@ -57,21 +79,11 @@ export default class GameBoard {
     if (
       (position === "h" && coordinatesY - 1 + ship.length > 10) ||
       (position === "v" && key + ship.length > 10) ||
-      !this.getShipPlacementCells(
-        [verticalArray[key], coordinatesY],
-        ship.length,
-        position,
-      ).every((cell) => typeof cell === "number")
+      !this.isEmptyCells(shipCells)
     )
       throw new Error("Can't place this ship here");
 
-    if (coordinatesY - 1 + ship.length > 10 || position === "v") {
-      for (let i = 0; i < ship.length; i++)
-        this.cells[verticalArray[key + i]][coordinatesY - 1] = ship;
-    } else {
-      for (let i = 0; i < ship.length; i++)
-        this.cells[coordinatesX][coordinatesY - 1 + i] = ship;
-    }
+    this.validateShip(shipCells, ship);
   }
 
   receiveAttack(coordinatesX, coordinatesY) {
