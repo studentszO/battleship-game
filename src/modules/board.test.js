@@ -51,11 +51,11 @@ describe("receiveAttack method tests", () => {
   board.placeShip(new Ship(2), ["A", 7], "v");
 
   it("should add an hit point to the ship if the ship is present on those coordinates", () => {
-    expect(board.receiveAttack("A", 2)).toMatch(/HIT!/);
+    expect(board.receiveAttack("A", 2)).toBeTruthy();
   });
 
   it("should say when there is no ship on the coordinates", () => {
-    expect(board.receiveAttack("A", 5)).toMatch(/No ship/);
+    expect(board.receiveAttack("A", 5)).toBeFalsy();
   });
 
   it("should records the missed attack", () => {
