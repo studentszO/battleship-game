@@ -69,3 +69,31 @@ describe("receiveAttack method tests", () => {
     expect(board.allSunk()).toBe(true);
   });
 });
+
+describe("randomize ship cell test", () => {
+  it("should be an array with valid coordinates", () => {
+    expect(randomizeFactory().cell()[0]).toMatch(/[A-J]/);
+    expect(randomizeFactory().cell()[1].toString()).toMatch(/^(10|[1-9])$/);
+  });
+});
+
+describe("place ships randomly tests", () => {
+  const board = new GameBoard();
+  board.placeShipsRandomly();
+
+  it("should have 5 ships on the board", () => {
+    expect(board.shipsOnBoard).toHaveLength(5);
+  });
+
+  it("should match the ship object", () => {
+    board.shipsOnBoard.forEach((object) =>
+      expect(object).toEqual(
+        expect.objectContaining({
+          hitPoints: expect.anything(),
+          length: expect.anything(),
+          sunk: expect.anything(),
+        }),
+      ),
+    );
+  });
+});
