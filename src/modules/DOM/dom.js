@@ -1,10 +1,9 @@
 /* eslint-disable no-undef */
 /* global document */
-import GameBoard from "./board";
-import Player from "./players";
-import Ship from "./ships";
-
-export const players = [new Player("you"), new Player("computer")];
+import Ship from "../GAME/ships";
+import { handleWinner, checkWinner } from "./game-ends";
+import players from "./make-players";
+import { randomizeFactory } from "../GAME/board";
 
 function makeCellsLine(cell) {
   const lineDiv = [];
@@ -66,7 +65,7 @@ export function makeBoard(player) {
   });
 }
 
-export function getPlayerBoardNode(player) {
+function getPlayerBoardNode(player) {
   return document.querySelector(`.${player.name}-board`);
 }
 
@@ -95,23 +94,6 @@ function getShipOrientation(arr) {
   );
 }
 
-export function renderPlayerShipsOnDOM() {
-  const allShipsCells = [];
-
-  for (let i = 0; i < players[0].board.shipsOnBoard.length; i++)
-    allShipsCells.push(
-      getShipNodes(
-        players[0],
-        getShipCells(players[0], players[0].board.shipsOnBoard[i]),
-      ),
-    );
-
-  const shipsOrientation = getShipOrientation(allShipsCells);
-  allShipsCells.forEach((shipCells, index) => {
-    handleNodesClasses(shipCells, shipsOrientation[index]);
-  });
-}
-
 function getShipNodes(player, array) {
   const nodesArray = array.map((cellID) => [
     getPlayerBoardNode(player).querySelector(`div[data-cell='${cellID}']`),
@@ -133,6 +115,23 @@ function handleNodesClasses(nodesArray, shipOrientation) {
       node[0].classList.add(`ship-end-${shipOrientation}`);
     if (index > 0 && index < nodesArray.length - 1)
       node[0].classList.add(`ship-mid-${shipOrientation}`);
+  });
+}
+
+export function renderPlayerShipsOnDOM() {
+  const allShipsCells = [];
+
+  for (let i = 0; i < players[0].board.shipsOnBoard.length; i++)
+    allShipsCells.push(
+      getShipNodes(
+        players[0],
+        getShipCells(players[0], players[0].board.shipsOnBoard[i]),
+      ),
+    );
+
+  const shipsOrientation = getShipOrientation(allShipsCells);
+  allShipsCells.forEach((shipCells, index) => {
+    handleNodesClasses(shipCells, shipsOrientation[index]);
   });
 }
 
@@ -164,19 +163,8 @@ function attackCell(player, cell) {
   return cell.classList.add("hit");
 }
 
-function randomizeCellForIA() {
-  const verticalArray = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
-
-  const [x, y] = [
-    verticalArray[Math.floor(Math.random() * 10)],
-    Math.round(Math.random() * 9) + 1,
-  ];
-
-  return [x, y];
-}
-
 function IATurn(ia) {
-  const IAcoords = randomizeCellForIA();
+  const IAcoords = randomizeFactory().cell();
 
   const IAtarget = document.querySelector(
     `.game-container > div:first-of-type div[data-cell=${IAcoords.join("")}]`,

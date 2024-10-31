@@ -43,7 +43,7 @@ function getShipPlacementCells(
 
 export function randomizeFactory() {
   const shipOrientation = () => (Math.random() < 0.5 ? "v" : "h");
-  const shipLength = () => Math.floor((Math.random() * 100) / 20) + 1;
+  const shipLength = () => Math.floor((Math.random() * 100) / 20) + 2;
   const cell = () => {
     const verticalArray = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
 
