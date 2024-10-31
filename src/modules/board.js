@@ -1,4 +1,5 @@
 /* eslint-disable no-return-assign */
+import Ship from "./ships";
 
 const makeBoard = () => {
   const boardObject = {
@@ -40,6 +41,23 @@ function getShipPlacementCells(
   return cellsArray;
 }
 
+export function randomizeFactory() {
+  const shipOrientation = () => (Math.random() < 0.5 ? "v" : "h");
+  const shipLength = () => Math.floor((Math.random() * 100) / 20) + 1;
+  const cell = () => {
+    const verticalArray = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
+
+    const [x, y] = [
+      verticalArray[Math.floor(Math.random() * 10)],
+      Math.round(Math.random() * 9) + 1,
+    ];
+
+    return [x, y];
+  };
+
+  return { shipLength, cell, shipOrientation };
+}
+
 export default class GameBoard {
   constructor() {
     this.cells = makeBoard();
@@ -61,28 +79,38 @@ export default class GameBoard {
     array.forEach((cell) => (this.cells[cell[0]][cell[1]] = ship));
   }
 
-  placeShip(ship, [coordinatesX, coordinatesY], position) {
+  placeShipsRandomly() {
+    while (this.shipsOnBoard.length < 5) {
+      const ship = new Ship(randomizeFactory().shipLength());
+      this.placeShip(
+        ship,
+        randomizeFactory().cell(),
+        randomizeFactory().shipOrientation(),
+      );
+    }
+  }
+
+  placeShip(ship, [coordinatesX, coordinatesY], orientation) {
     // coordinatesX = vertical / columns (i.g: A or C...)
     // coordinatesY = horizontal / inline (i.g: 2 or 7...)
     const key = Object.keys(this.cells).indexOf(coordinatesX);
     const shipCells = getShipPlacementCells(
       [coordinatesX, coordinatesY],
       ship.length,
-      position,
+      orientation,
     );
 
-    this.shipsOnBoard.push(ship);
-
-    if (position !== "v" && position !== "h")
-      throw new Error("Wrong position parameter: use only v or h");
+    if (orientation !== "v" && orientation !== "h")
+      throw new Error("Wrong orientation parameter: use only v or h");
 
     if (
-      (position === "h" && coordinatesY - 1 + ship.length > 10) ||
-      (position === "v" && key + ship.length > 10) ||
+      (orientation === "h" && coordinatesY - 1 + ship.length > 10) ||
+      (orientation === "v" && key + ship.length > 10) ||
       !this.isEmptyCells(shipCells)
     )
       throw new Error("Can't place this ship here");
 
+    this.shipsOnBoard.push(ship);
     this.validateShip(shipCells, ship);
   }
 
