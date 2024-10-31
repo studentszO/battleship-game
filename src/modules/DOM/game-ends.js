@@ -1,5 +1,7 @@
 /* eslint-disable no-undef */
 import players from "./make-players";
+import GameBoard from "../GAME/board";
+import { eventListener, makeBoard, renderPlayerShipsOnDOM } from "./dom";
 
 function showModal() {
   const modal = document.querySelector("dialog");
@@ -27,7 +29,10 @@ function resetGame() {
   resetDOM();
   resetPlayersBoards();
   hideModal();
-  // TODO Add a function to add ships randomly
+  players[0].board.placeShipsRandomly();
+  players[1].board.placeShipsRandomly();
+  renderPlayerShipsOnDOM();
+  eventListener([players[0], players[1]]);
 }
 
 function handleResetButton() {

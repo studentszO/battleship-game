@@ -1,5 +1,4 @@
 import "./style.css";
-// import Player from "./modules/players";
 import players from "./modules/DOM/make-players";
 import {
   makeBoard,
@@ -7,13 +6,16 @@ import {
   renderPlayerShipsOnDOM,
 } from "./modules/DOM/dom";
 
-players.forEach((player) => {
-  player.board.placeShipsRandomly();
-});
+export default function placeShipsRandomlyForAll() {
+  players.forEach((player) => {
+    player.board.placeShipsRandomly();
+  });
+}
 
 // Make the boards for each player
 makeBoard(players[0]);
 makeBoard(players[1]);
+placeShipsRandomlyForAll();
 renderPlayerShipsOnDOM();
 
 // Start listening to the DOM events
