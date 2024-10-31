@@ -108,7 +108,7 @@ export default class GameBoard {
       (orientation === "v" && key + ship.length > 10) ||
       !this.isEmptyCells(shipCells)
     )
-      throw new Error("Can't place this ship here");
+      return;
 
     this.shipsOnBoard.push(ship);
     this.validateShip(shipCells, ship);

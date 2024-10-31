@@ -1,4 +1,4 @@
-import GameBoard from "./board";
+import GameBoard, { randomizeFactory } from "./board";
 import Ship from "./ships";
 
 describe("Place ships tests", () => {
@@ -23,12 +23,12 @@ describe("Place ships tests", () => {
 
   it("should NOT place a ship on the board if the length of the boat is greater than the board vertically", () => {
     const ship = new Ship(2);
-    expect(() => board.placeShip(ship, ["J", 1], "v")).toThrow();
+    expect(board.placeShip(ship, ["J", 1], "v")).toBeUndefined();
   });
 
   it("should NOT place a ship on the board if the length of the boat is greater than the board horizontally AND vertically", () => {
     const ship = new Ship(2);
-    expect(() => board.placeShip(ship, ["J", 10], "h")).toThrow();
+    expect(board.placeShip(ship, ["J", 10], "h")).toBeUndefined();
   });
 
   it("should place a ship on the board vertically", () => {
@@ -41,7 +41,7 @@ describe("Place ships tests", () => {
     const shipFive = new Ship(5);
     const shipTwo = new Ship(2);
     board.placeShip(shipFive, ["A", 3], "v");
-    expect(() => board.placeShip(shipTwo, ["E", 2], "h")).toThrow();
+    expect(board.placeShip(shipTwo, ["E", 2], "h")).toBeUndefined();
   });
 });
 
