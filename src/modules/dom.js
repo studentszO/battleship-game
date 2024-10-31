@@ -1,5 +1,6 @@
 /* eslint-disable no-undef */
 /* global document */
+import GameBoard from "./board";
 import Ship from "./ships";
 
 function makeCellsLine(cell) {
@@ -165,23 +166,42 @@ export function eventListener(playersArray) {
     ".game-container > div:last-of-type",
   );
 
-  gameContainer.addEventListener("click", (event) => {
+  const checkWinner = () => {
+    if (playersArray[0].board.shipsOnBoard.every((ship) => ship.sunk))
+      return playersArray[1].name;
+    if (playersArray[1].board.shipsOnBoard.every((ship) => ship.sunk))
+      return playersArray[0].name;
+    return false;
+  };
+
+  function printWinner() {
+    document.querySelector(".winner-name").textContent =
+      `${checkWinner()} win!`;
+  }
+
+  const play = (event) => {
     if (event.target.classList.contains("clicked")) return;
     if (!event.target.hasAttribute("data-cell")) return;
 
     event.target.classList.add("clicked");
 
     attackCell(playersArray[1], event.target);
+    if (!checkWinner()) IATurn(playersArray[0]);
+    if (checkWinner()) printWinner();
+  };
 
-    // then IA Attacks
-    IATurn(playersArray[0]);
-    checkWinner(playersArray);
-  });
+  gameContainer.addEventListener("click", play);
 }
 
-function checkWinner(players) {
-  if (players[0].board.shipsOnBoard.every((ship) => ship.sunk))
-    alert(`${players[1].name} is the winner`);
-  if (players[1].board.shipsOnBoard.every((ship) => ship.sunk))
-    alert(`${players[0].name} is the winner`);
+function showModal() {
+  const modal = document.querySelector("dialog");
+  modal.showModal();
 }
+
+function handleResetButton() {
+  const button = document.querySelector(".modal > button");
+  button.onclick = () => resetGame(); // TODO
+}
+
+showModal();
+handleResetButton();

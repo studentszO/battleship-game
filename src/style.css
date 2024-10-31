@@ -231,3 +231,45 @@ div[data-cell]:hover {
   justify-self: center;
   align-self: start;
 }
+
+dialog {
+  position: absolute;
+  margin: auto;
+  padding: 35px;
+  background: rgba(0, 0, 0, 0.25);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(4px);
+  border-radius: 10px;
+  border: 2px solid rgba(255, 255, 255, 0.18);
+}
+
+.modal {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 100px;
+}
+
+.winner-name {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+.modal > button {
+  font-size: 1.2rem;
+  font-weight: 300;
+  color: #fff;
+  padding: 5px 8px;
+  background: rgba(145, 221, 57, 0.774);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  border-radius: 10px 20px;
+  border: 2px solid rgba(144, 221, 57, 0.493);
+}
+.modal > button:hover {
+  cursor: pointer;
+  background: rgba(159, 255, 50, 0.774);
+}
