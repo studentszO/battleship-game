@@ -273,3 +273,7 @@ dialog {
   cursor: pointer;
   background: rgba(159, 255, 50, 0.774);
 }
+
+.modal > button:focus {
+  outline: none;
+}
