@@ -1,8 +1,10 @@
 /* eslint-disable no-undef */
 /* global document */
 import GameBoard from "./board";
+import Player from "./players";
 import Ship from "./ships";
-import players from "..";
+
+export const players = [new Player("you"), new Player("computer")];
 
 function makeCellsLine(cell) {
   const lineDiv = [];
@@ -85,6 +87,29 @@ function getShipCells(player, ship) {
   );
 
   return cells;
+}
+
+function getShipOrientation(arr) {
+  return arr.map((ship) =>
+    ship[0][0].nextElementSibling === ship[1][0] ? "h" : "v",
+  );
+}
+
+export function renderPlayerShipsOnDOM() {
+  const allShipsCells = [];
+
+  for (let i = 0; i < players[0].board.shipsOnBoard.length; i++)
+    allShipsCells.push(
+      getShipNodes(
+        players[0],
+        getShipCells(players[0], players[0].board.shipsOnBoard[i]),
+      ),
+    );
+
+  const shipsOrientation = getShipOrientation(allShipsCells);
+  allShipsCells.forEach((shipCells, index) => {
+    handleNodesClasses(shipCells, shipsOrientation[index]);
+  });
 }
 
 function getShipNodes(player, array) {
@@ -179,57 +204,4 @@ export function eventListener() {
   );
 
   gameContainer.addEventListener("click", play);
-}
-
-function showModal() {
-  const modal = document.querySelector("dialog");
-  modal.showModal();
-}
-
-function hideModal() {
-  const modal = document.querySelector("dialog");
-  modal.close();
-}
-
-// RESET BOARDS FUNCTIONS
-function resetPlayersBoards() {
-  players[0].board = new GameBoard();
-  players[1].board = new GameBoard();
-}
-
-function resetDOM() {
-  document.querySelector(".game-container").textContent = "";
-  resetPlayersBoards();
-  makeBoard(players[0]);
-  makeBoard(players[1]);
-}
-
-function resetGame() {
-  resetDOM();
-  resetPlayersBoards();
-  hideModal();
-  // TODO Add a function to add ships randomly
-}
-
-function handleResetButton() {
-  const button = document.querySelector(".modal > button");
-  button.onclick = () => resetGame(); // TODO
-}
-
-const checkWinner = () => {
-  if (players[0].board.shipsOnBoard.every((ship) => ship.sunk))
-    return players[1].name;
-  if (players[1].board.shipsOnBoard.every((ship) => ship.sunk))
-    return players[0].name;
-  return false;
-};
-
-function printWinner() {
-  document.querySelector(".winner-name").textContent = `${checkWinner()} win!`;
-}
-
-function handleWinner() {
-  printWinner();
-  showModal();
-  handleResetButton();
 }
