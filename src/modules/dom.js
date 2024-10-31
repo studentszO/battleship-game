@@ -2,6 +2,7 @@
 /* global document */
 import GameBoard from "./board";
 import Ship from "./ships";
+import players from "..";
 
 function makeCellsLine(cell) {
   const lineDiv = [];
@@ -161,34 +162,21 @@ function IATurn(ia) {
   attackCell(ia, IAtarget);
 }
 
-export function eventListener(playersArray) {
+const play = (event) => {
+  if (event.target.classList.contains("clicked")) return;
+  if (!event.target.hasAttribute("data-cell")) return;
+
+  event.target.classList.add("clicked");
+
+  attackCell(players[1], event.target);
+  if (!checkWinner()) IATurn(players[0]);
+  if (checkWinner()) handleWinner();
+};
+
+export function eventListener() {
   const gameContainer = document.querySelector(
     ".game-container > div:last-of-type",
   );
-
-  const checkWinner = () => {
-    if (playersArray[0].board.shipsOnBoard.every((ship) => ship.sunk))
-      return playersArray[1].name;
-    if (playersArray[1].board.shipsOnBoard.every((ship) => ship.sunk))
-      return playersArray[0].name;
-    return false;
-  };
-
-  function printWinner() {
-    document.querySelector(".winner-name").textContent =
-      `${checkWinner()} win!`;
-  }
-
-  const play = (event) => {
-    if (event.target.classList.contains("clicked")) return;
-    if (!event.target.hasAttribute("data-cell")) return;
-
-    event.target.classList.add("clicked");
-
-    attackCell(playersArray[1], event.target);
-    if (!checkWinner()) IATurn(playersArray[0]);
-    if (checkWinner()) printWinner();
-  };
 
   gameContainer.addEventListener("click", play);
 }
@@ -198,10 +186,50 @@ function showModal() {
   modal.showModal();
 }
 
+function hideModal() {
+  const modal = document.querySelector("dialog");
+  modal.close();
+}
+
+// RESET BOARDS FUNCTIONS
+function resetPlayersBoards() {
+  players[0].board = new GameBoard();
+  players[1].board = new GameBoard();
+}
+
+function resetDOM() {
+  document.querySelector(".game-container").textContent = "";
+  resetPlayersBoards();
+  makeBoard(players[0]);
+  makeBoard(players[1]);
+}
+
+function resetGame() {
+  resetDOM();
+  resetPlayersBoards();
+  hideModal();
+  // TODO Add a function to add ships randomly
+}
+
 function handleResetButton() {
   const button = document.querySelector(".modal > button");
   button.onclick = () => resetGame(); // TODO
 }
 
-showModal();
-handleResetButton();
+const checkWinner = () => {
+  if (players[0].board.shipsOnBoard.every((ship) => ship.sunk))
+    return players[1].name;
+  if (players[1].board.shipsOnBoard.every((ship) => ship.sunk))
+    return players[0].name;
+  return false;
+};
+
+function printWinner() {
+  document.querySelector(".winner-name").textContent = `${checkWinner()} win!`;
+}
+
+function handleWinner() {
+  printWinner();
+  showModal();
+  handleResetButton();
+}
