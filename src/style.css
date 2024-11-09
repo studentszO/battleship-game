@@ -1,6 +1,9 @@
 :root {
   font-family: sans-serif;
   --cell-width-height: 40px;
+  --ship-border: 1px solid #97a5c4bd;
+  --ship-clr: #272729d5;
+  --cell-border: #1b8bd669;
 }
 
 * {
@@ -20,12 +23,32 @@ html {
 }
 
 .game-container {
-  width: calc(var(--cell-width-height) * 10 * 2.5);
-  height: calc(var(--cell-width-height) * 10 * 1.3);
-  background-color: rgb(78, 78, 78);
+  width: calc(var(--cell-width-height) * 10 * 2.5 + 10px);
+  height: calc(var(--cell-width-height) * 10 * 1.2 + 10px);
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 50px;
+  border-radius: 10px;
+  background-color: #ffffff46;
+  border: 1px solid rgba(255, 255, 255, 0.521);
+  box-shadow: rgba(168, 168, 168, 0.35) 0px 5px 15px;
+}
+
+.game-container::before {
+  position: absolute;
+  content: "";
+  margin: -45px;
+  border-radius: 7px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  width: calc(var(--cell-width-height) * 10 * 2.5);
+  height: calc(var(--cell-width-height) * 10 * 1.2);
+  background-color: #181a1b;
+  /* Photo by Lucas Andrade: https://www.pexels.com/photo/a-close-up-of-the-ocean-water-28203242/ */
+  background-image: url("./assets/water-bg.jpg");
+  background-size: cover;
+  background-attachment: fixed;
+  filter: brightness(1.2) saturate(0);
 }
 
 .game-container > div:first-of-type,
@@ -33,18 +56,23 @@ html {
   width: calc(var(--cell-width-height) * 10);
   height: calc(var(--cell-width-height) * 10);
   box-sizing: content-box;
-  border-left: 1px solid rgb(212, 212, 212);
-  border-top: 1px solid rgb(212, 212, 212);
+  border-left: 1px solid var(--cell-border);
+  border-top: 1px solid var(--cell-border);
   display: flex;
   flex-flow: row wrap;
   position: relative;
+  /* From https://css.glass */
+  background: rgba(17, 17, 17, 0.753);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(3.7px);
+  -webkit-backdrop-filter: blur(3.7px);
 }
 
 .game-container > div:first-of-type > div,
 .game-container > div:last-of-type > div {
   width: var(--cell-width-height);
   height: var(--cell-width-height);
-  border: 1px solid rgb(212, 212, 212);
+  border: 1px solid var(--cell-border);
   border-left: 0;
   border-top: 0;
 }
@@ -99,7 +127,7 @@ html {
   display: flex;
   margin-top: 2px;
   justify-content: center;
-  content: url(./assets/crossmark.svg);
+  content: url(./assets/splash.svg);
   opacity: 0.9;
 }
 
@@ -109,12 +137,18 @@ html {
   align-items: center;
 }
 
-div[data-cell]:hover {
-  background-color: rgb(141, 141, 141);
+.game-container div:last-of-type div[data-cell]:hover {
+  background-color: rgba(71, 71, 71, 0.493);
+  background-image: url(./assets/target.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
 }
 
-.game-container .clicked:hover {
-  background-color: inherit;
+body .game-container div:last-of-type .clicked:hover {
+  background-color: transparent;
+  color: rgb(252, 129, 108);
+  background-image: none;
 }
 
 .game-container > div:last-of-type .hit::after {
@@ -133,8 +167,8 @@ div[data-cell]:hover {
   height: 75%;
   justify-self: end;
   content: "";
-  background-color: rgba(19, 19, 19, 0.87);
-  border: 2px solid rgb(51, 51, 51);
+  background-color: var(--ship-clr);
+  border: var(--ship-border);
 }
 
 .ship-mid-h::before,
@@ -143,8 +177,8 @@ div[data-cell]:hover {
   position: absolute;
   align-self: center;
   margin: -1px;
-  background-color: rgb(19, 19, 19, 0.87);
-  border: 2px solid rgb(51, 51, 51);
+  background-color: var(--ship-clr);
+  border: var(--ship-border);
 }
 
 .ship-end-h::before,
@@ -155,8 +189,8 @@ div[data-cell]:hover {
   align-self: center;
   margin: -1px;
   height: 75%;
-  background-color: rgb(19, 19, 19, 0.87);
-  border: 2px solid rgb(51, 51, 51);
+  background-color: var(--ship-clr);
+  border: var(--ship-border);
 }
 
 /* HORIZONTAL ship SETUP */
@@ -202,6 +236,7 @@ div[data-cell]:hover {
 /* VERTICAL ship SETUP */
 .ship-start-v::before {
   justify-self: center;
+  margin: -1px;
   align-self: end;
   border-radius: 50% 50% 0 0;
   border-bottom: 0;
@@ -218,6 +253,7 @@ div[data-cell]:hover {
 .ship-end-v::before {
   justify-self: center;
   align-self: start;
+  margin-top: 0.3px;
   border-radius: 0 0 50% 50%;
   border-top: 0;
 }
