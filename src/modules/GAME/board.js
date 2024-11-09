@@ -80,6 +80,9 @@ export default class GameBoard {
   }
 
   placeShipsRandomly() {
+    // reset ships on board
+    this.shipsOnBoard = [];
+
     const placeOneShipRandomly = (ship) => {
       this.placeShip(
         ship,
