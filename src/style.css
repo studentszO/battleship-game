@@ -296,14 +296,14 @@ dialog {
   font-weight: 300;
   color: #fff;
   padding: 5px 12px;
-  background: rgba(135, 190, 71, 0.774);
+  background: var(--cell-border);
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
   border-radius: 10px 20px;
-  border: 2px solid rgba(144, 221, 57, 0.493);
+  border: 2px solid rgba(105, 194, 213, 0.493);
 }
 .modal > button:hover {
   cursor: pointer;
-  background: rgba(159, 255, 50, 0.774);
+  background: rgba(65, 210, 242, 0.774);
 }
 
 .modal > button:focus {
