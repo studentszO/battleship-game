@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 /* global document */
 import Ship from "../GAME/ships";
-import { handleWinner, checkWinner } from "./game-ends";
+import checkWinner from "./check-winner";
 import players from "./make-players";
 import { randomizeFactory } from "../GAME/board";
 
@@ -183,7 +183,7 @@ const play = (event) => {
 
   attackCell(players[1], event.target);
   if (!checkWinner()) IATurn(players[0]);
-  if (checkWinner()) handleWinner();
+  // if (checkWinner()) handleWinner();
 };
 
 export function eventListener() {
