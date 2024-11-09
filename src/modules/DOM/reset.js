@@ -1,6 +1,6 @@
 /* global document */
 import makeBoard from "./board";
-import players from "./make-players";
+import players from "./players";
 import GameBoard from "../GAME/board";
 import { renderPlayerShipsOnDOM } from "./ships";
 

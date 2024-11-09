@@ -1,6 +1,6 @@
 /* global document */
 import checkWinner from "./check-winner";
-import players from "./make-players";
+import players from "./players";
 import { randomizeFactory } from "../GAME/board";
 import { getPlayerBoardNode } from "./ships";
 import handleCellSplit from "./cell-args-handler";

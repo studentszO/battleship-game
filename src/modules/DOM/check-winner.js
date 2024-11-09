@@ -1,5 +1,5 @@
 import handleWinner from "./game-ends";
-import players from "./make-players";
+import players from "./players";
 
 export default function checkWinner() {
   if (players[0].board.shipsOnBoard.every((ship) => ship.sunk))

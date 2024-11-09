@@ -1,5 +1,5 @@
 /* global document */
-import players from "./make-players";
+import players from "./players";
 import Ship from "../GAME/ships";
 import handleCellSplit from "./cell-args-handler";
 
