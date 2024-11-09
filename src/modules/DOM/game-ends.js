@@ -6,6 +6,7 @@ const modal = document.querySelector("dialog");
 function resetGame() {
   resetDOM();
   modal.close();
+  document.querySelector(".start-modal").showModal();
 }
 
 function handleResetButton() {
@@ -19,6 +20,6 @@ function printWinner(name) {
 
 export default function handleWinner(name) {
   printWinner(name);
-  modal.showModal();
+  document.querySelector("dialog").showModal();
   handleResetButton();
 }

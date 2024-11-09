@@ -1,6 +1,8 @@
-import { makeBoard, renderPlayerShipsOnDOM } from "./dom";
+/* global document */
+import makeBoard from "./board";
 import players from "./make-players";
 import GameBoard from "../GAME/board";
+import { renderPlayerShipsOnDOM } from "./ships";
 
 function resetPlayersBoards() {
   players[0].board = new GameBoard();
@@ -14,7 +16,6 @@ function randomizeShipsPlacement() {
 }
 
 export default function resetDOM() {
-  // eslint-disable-next-line no-undef
   document.querySelector(".game-container").textContent = "";
   resetPlayersBoards();
   makeBoard(players[0]);
