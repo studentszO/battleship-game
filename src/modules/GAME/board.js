@@ -80,13 +80,22 @@ export default class GameBoard {
   }
 
   placeShipsRandomly() {
-    while (this.shipsOnBoard.length < 5) {
-      const ship = new Ship(randomizeFactory().shipLength());
+    const placeOneShipRandomly = (ship) => {
       this.placeShip(
         ship,
         randomizeFactory().cell(),
         randomizeFactory().shipOrientation(),
       );
+    };
+
+    while (this.shipsOnBoard.length < 4) {
+      const ship = new Ship(this.shipsOnBoard.length + 2);
+      placeOneShipRandomly(ship);
+    }
+
+    while (this.shipsOnBoard.length < 5) {
+      const ship = new Ship(3);
+      placeOneShipRandomly(ship);
     }
   }
 
@@ -108,10 +117,10 @@ export default class GameBoard {
       (orientation === "v" && key + ship.length > 10) ||
       !this.isEmptyCells(shipCells)
     )
-      return;
+      return false;
 
     this.shipsOnBoard.push(ship);
-    this.validateShip(shipCells, ship);
+    return this.validateShip(shipCells, ship);
   }
 
   receiveAttack(coordinatesX, coordinatesY) {
