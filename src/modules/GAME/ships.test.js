@@ -1,4 +1,4 @@
-import Ship from "../ships";
+import Ship from "./ships";
 
 describe("Ship class", () => {
   const ship = new Ship(2);
