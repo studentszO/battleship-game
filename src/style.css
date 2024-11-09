@@ -1,9 +1,42 @@
+@font-face {
+  font-family: "versa";
+  src: url("./assets/fonts/Versa-Versa.woff") format("woff");
+  src: url("./assets/fonts/Versa-Versa.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
 :root {
   font-family: sans-serif;
   --cell-width-height: 40px;
   --ship-border: 1px solid #97a5c4bd;
   --ship-clr: #272729d5;
   --cell-border: #1b8bd669;
+}
+
+h1 {
+  top: 50px;
+  text-shadow:
+    2px 2px 0px rgba(0, 34, 73, 0.205),
+    5px 4px 0px rgba(0, 0, 0, 0.15);
+  display: flex;
+  user-select: none;
+  justify-content: center;
+  font-family: "versa", sans-serif;
+  font-size: 6rem;
+  letter-spacing: -1px;
+  background: linear-gradient(#ffffff, var(--cell-border));
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+h1::before {
+  position: absolute;
+  z-index: -1;
+  content: "BATTLESHIP";
+  background: rgba(0, 0, 0, 0.842);
+  background-clip: inherit;
+  filter: blur(6px) opacity(0.6) brightness(5);
 }
 
 * {
