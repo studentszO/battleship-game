@@ -260,11 +260,11 @@ dialog {
 }
 
 .modal > button {
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   font-weight: 300;
   color: #fff;
-  padding: 5px 8px;
-  background: rgba(145, 221, 57, 0.774);
+  padding: 5px 12px;
+  background: rgba(135, 190, 71, 0.774);
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
   border-radius: 10px 20px;
   border: 2px solid rgba(144, 221, 57, 0.493);
@@ -276,4 +276,9 @@ dialog {
 
 .modal > button:focus {
   outline: none;
+}
+
+.start-modal button:first-of-type {
+  border-radius: 20px 10px;
+  width: 100%;
 }
