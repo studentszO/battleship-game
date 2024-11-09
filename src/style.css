@@ -77,27 +77,6 @@ html {
   border-top: 0;
 }
 
-.game-container > div:first-of-type > .board-numbers,
-.game-container > div:last-of-type > .board-numbers {
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  width: calc(var(--cell-width-height) * 10);
-  top: -28px;
-  border: none;
-}
-
-.game-container > div:first-of-type > .board-letters,
-.game-container > div:last-of-type > .board-letters {
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  height: calc(var(--cell-width-height) * 10);
-  left: -35px;
-  border: none;
-}
-
 .game-container > div:last-of-type [class^="ship"]::before {
   display: none;
 }
@@ -105,22 +84,6 @@ html {
 .game-container > div:last-of-type [class^="ship"]::after {
   display: flex;
   justify-self: center;
-}
-
-.board-numbers > span,
-.board-letters > span {
-  width: var(--cell-width-height);
-  text-align: center;
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: white;
-}
-
-.board-letters > span {
-  height: var(--cell-width-height);
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .miss::after {

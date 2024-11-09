@@ -50,8 +50,8 @@ export default function makeBoard(player) {
   boardContainer.classList.add(`${player.name}-board`);
 
   gameContainer.appendChild(boardContainer);
-  boardContainer.appendChild(handleBoardLetters());
-  boardContainer.appendChild(handleBoardNumbers());
+  // boardContainer.appendChild(handleBoardLetters());
+  // boardContainer.appendChild(handleBoardNumbers());
 
   Object.keys(player.board.cells).forEach((key) => {
     const lineOfCells = makeCellsLine(key);
